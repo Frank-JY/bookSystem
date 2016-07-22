@@ -1,0 +1,98 @@
+body{
+	 margin: 0; 
+	padding: 0px; 
+	
+}
+
+
+#foot{
+	clear:both;
+	margin:0px;
+	padding:0px;
+	width: 100%;
+	height: 120px;
+	background: #000000;
+	position:relative;
+	bottom:0px;
+	right:0px;
+	float: left;
+}
+
+#footText li{
+	list-style: none;
+	float: left;
+	color: white;
+	position: relative;
+	left: 350px;
+	margin: 0 35px;
+	top: 5px;
+}
+
+#footText li a{
+	color: white;
+}
+
+#footText li a:hover{
+	color: #ffff00;
+}
+
+.author{
+	color: white;
+	font-size: 12px;
+	left:-150px;
+	margin: 0;
+	position: relative;
+	top: 70px;
+}
+
+ 
+.image1 {
+	display: inline;
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	height: 80px;
+	width: 350px;
+	position: relative;
+	top: -10px;
+	right: -400px;
+}
+
+
+.image1 a:hover {
+  background-color: #363c41;
+} 
+
+.image1 a{
+	float:left;
+  display: block;
+  margin: 0px;
+  padding: 0px;
+  height: 80px;
+  width: 140px;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.pic1{
+	background:url("../image/upload/image/qq.png")no-repeat center center;
+}
+
+.pic2{
+	background:url("../image/upload/image/baidu.png")no-repeat center center;
+	
+}
+
+a{
+	text-decoration:none;
+	color: #1853da;
+}
+
+a:hover{
+	color: red;
+}
+
+
+
+

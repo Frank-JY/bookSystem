@@ -1,0 +1,285 @@
+body{
+	 margin: 0; 
+	padding: 0px; 
+	background-image:url("../image/upload/image/background.jpg");
+}
+
+.top{
+	clear:both;
+	margin:0px;
+	padding:0px;
+	width: 100%;
+	height: 80px;
+	background-image:url("../image/upload/image//head.png");
+	position: relative;
+		
+}
+
+#logo {
+	display: inline;
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	height: 80px;
+	width: 160px;
+}
+
+
+#logo a:hover {
+  background-color: #363c41;
+} 
+
+#logo a{
+  display: block;
+  margin: 0 20px;
+  height: 80px;
+  width: 140px;
+ 
+  background:url("../image/upload/image/school.png")no-repeat center center;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.headphoto{
+	float:left;
+	position: relative;
+	top: -40px;
+	left: 878px;
+}
+
+.headphoto a{
+	width: 50px;
+}
+
+#text {
+	font-size: 30px;
+	color:#bc84fb;
+	display: inline;
+	position: relative;
+	left: 400px;
+	top: 15px;
+}
+
+#text:hover {
+	color: red;
+}
+
+.top3 a:hover {
+	color: red;
+}
+
+.function1{
+	margin: 0px;
+	padding: 0px;
+	position: relative;
+	top: -20px;
+}
+
+
+.function1 li{
+	list-style:none;
+	float: left;	
+	color:white;
+	position: relative;
+	left: 870px;
+	margin: 0 10px;
+	
+}
+
+.function1 a{
+	display: block;
+
+	height: 80px;
+  	width: 80px;
+	color:white;
+	
+}
+
+.function1 a:hover{
+	color: #ffff00;
+}
+
+.top2{
+	clear:both;
+	margin:0px;
+	padding:0px;
+	width: 100%;
+	height: 250px;
+	background-image:url("../image/upload/image/top2.jpg");
+	position: relative;
+	top: -45px;
+}
+
+.menu{
+	margin:0px;
+	padding:0px;
+	float: left;
+	width: 200px;
+	height: 1000px;
+	background-image: url("../image/upload/image/book.jpg");
+	position: fixed;
+	
+}
+
+#key {
+	display: block;
+  margin: 0 20px;
+  height: 180px;
+  width: 140px;
+  background:url("../image/upload/image/logo.png")no-repeat center center;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.menu-ul li{
+	list-style:none;	
+	color:white;
+	position: relative;
+	margin: 20px 0px;
+}
+
+hr{
+	width: 1000px;
+	color: #e4ef5c;
+	size: 10px;
+}
+
+h1{
+	color: #f9891a;
+}
+
+.top3 {
+	
+	width: 90%;
+	height: 100px;
+	margin: 0 auto;
+	position: relative;
+	
+	top: -45px;
+}
+
+.top3 li {
+	font-size:18px;
+	
+	float: left;	
+	color:#333cd5;
+	position: relative;
+	margin: 15px;
+	top: 50px;
+}
+
+.top3 a {
+	color: #774650;
+}
+
+#keys {
+	display: block;
+  margin: -10px 70px;
+  height: 125px;
+  width: 140px;
+  background:url("../image/upload/image/logo.png")no-repeat center center;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  float: left;
+}
+
+#hr1 {
+	color: #ff8000;
+	position:relative;
+
+}
+
+.user {
+	color: #645cf3;
+	font-size: 35px;
+	position: relative;
+	width:400px;
+	left: 250px;
+	top: 80px;
+	font-weight: blod;
+}
+
+.user:hover {
+	color: #e9c463;
+	font-size: 55px;
+}
+
+#detail {
+	float: left;
+	margin: 0 50px;
+	padding: 20px;
+	
+}
+
+dd{
+	margin: 0px;
+	padding: 0px;
+	
+}
+
+#collect {
+	float: left;
+	margin: 0 50px;
+	padding: 20px;
+	width: 300px;
+}
+#search {
+	float: left;
+	margin: 0 50px;
+	padding: 20px;
+	width: 300px;
+}
+
+
+
+.picture a:hover img{
+    -webkit-transform:scale(1.5,1.5);
+    -moz-transform:scale(1.5,1.5);
+    -transform:scale(1.5,1.5);
+}
+    
+.backtop {
+	display: inline;
+	float: right;
+	margin: 0px;
+	padding: 0px;
+	height: 80px;
+	width: 160px;
+	position: fixed;
+	top:500px;
+	
+}
+
+
+.backtop a:hover {
+  background-color: #d2f48a;
+  -webkit-transform:scale(1.5,1.5);
+    -moz-transform:scale(1.5,1.5);
+    -transform:scale(1.5,1.5);
+} 
+
+
+.backtop a{
+  display: block;
+  margin: 0 20px;
+  height: 50px;
+  width: 50px;
+ 
+  background:url("../image/upload/image/backtop.png")no-repeat center center;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  position: fixed;
+	top:450px;
+	left: 1400px;
+}
+    
+textarea{
+	resize:none;
+} 
+      
+
+    

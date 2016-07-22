@@ -1,0 +1,39 @@
+.about {
+    width: 980px;
+    height:350px;
+    margin:0px auto;
+    padding:0px;
+    background: #F5F7FA;
+    border-right: 1px solid #e5e5e5;
+    position: relative;
+  	border: 5px solid #c0c0c0;
+}
+
+.comment h1{
+	font-size: 22px;
+}
+
+.te {
+	position: relative;
+	left: 30px;
+	top: -20px;
+}
+
+.bu {
+	position: relative;
+	left: 30px;
+	top:-15px;
+}
+
+.reg {
+	width:250px;
+	position: relative;
+	left: 700px;
+	top: -230px;
+	color: #2fca09;
+}
+
+.pp{
+	position: relative;
+	top:-30px;
+}
