@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<properties resource="com/yuanjunye/www/config/db.properties"/>
+	<typeAliases>
+		<package name="com.yuanjunye.www.po"/>
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/yuanjunye/www/dao/RegisterDao.xml"/>
+		<mapper resource="com/yuanjunye/www/dao/UserDao.xml"/>
+		<mapper resource="com/yuanjunye/www/dao/LoginDao.xml"/>
+		<mapper resource="com/yuanjunye/www/dao/Advice.xml"/>
+		<mapper resource="com/yuanjunye/www/dao/BookDao.xml"/>
+		<mapper resource="com/yuanjunye/www/dao/BorrowDao.xml"/>
+		<mapper resource="com/yuanjunye/www/dao/CommentDao.xml"/>
+		<mapper resource="com/yuanjunye/www/dao/FavouriteDao.xml"/>
+		<mapper resource="com/yuanjunye/www/dao/FriendDao.xml"/>
+		<mapper resource="com/yuanjunye/www/dao/BookType.xml"/>
+		
+
+	</mappers>
+	
+</configuration>

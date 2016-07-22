@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.yuanjunye.www.dao.IBookDao"> 
+
+	<!-- 显示所有图书信息(无顺序) -->
+	<select id="showAllBooks1Dao" resultType="Books">
+		select * from t_books a, t_booktype b where a.typeId = b.typeId
+	</select>
+	
+	<!-- 显示所有图书信息（有顺序） -->
+	<select id="showAllBooksDao" resultType="Books">
+		select * from t_books a, t_booktype b where a.typeId = b.typeId order by bookId
+	</select>
+	
+	<!-- 判断图书编号是否存在 -->
+	<select id="judgeBookIdDao" parameterType="String" resultType="int">
+		select count(*) from t_books where bookId = #{bookId}
+	</select>
+	
+	<!-- 上架图书 -->
+	<insert id="addBookDao" parameterType="Books">
+		insert into t_books values (#{bookId},#{bookName},#{author},#{publishers},#{time},#{typeId}
+		,#{total},#{total},#{number},#{remarks},#{status},#{photo})
+	</insert>
+	
+	<!-- 查询图书库存 -->
+	<select id="findAmountDao" parameterType="String" resultType="int">
+		select amount from t_books where bookId = #{bookId}
+	</select>
+	
+	<!-- 改变图书状态（上架） -->
+	<update id="inBookDao" parameterType="Books">
+		update t_books set status = #{status} where bookId = #{bookId}
+	</update>
+	
+	<!-- 改变图书状态（下架） -->
+	<update id="outBookDao" parameterType="String">
+		update t_books set status = '已下架' where bookId = #{bookId}
+	</update>
+	
+	<!-- 显示一本图书信息 -->
+	<select id="showBookDao" parameterType="String" resultType="Books">
+		select * from t_books a, t_booktype b where a.typeId = b.typeId and bookId = #{bookId}
+	</select>
+	
+	<!-- 修改图书信息 -->
+	<update id="updateBookDao" parameterType="Books">
+		update t_books set bookName=#{bookName}, author=#{author}, publishers=#{publishers}, typeId=#{typeId},
+		 amount=#{amount}, total=#{total}, remarks=#{remarks}, status=#{status} where bookId = #{bookId}
+	</update>
+	
+	<!-- 更换图书封面 -->
+	<update id="updatePhotoDao" parameterType="Books">
+		update t_books set photo = #{photo} where bookId = #{bookId}
+	</update>
+	
+	<!-- 删除图书 -->
+	<delete id="deleteBookDao" parameterType="String">
+		delete from t_books where bookId = #{bookId}
+	</delete>
+	
+	<!-- 查询图书总数和库存 -->
+	<select id="checkAmountTotalDao" parameterType="String" resultType="Books">
+		select amount,total from t_books where bookId = #{bookId}
+	</select>
+	
+	<!-- 模糊查询图书信息 -->
+	<select id="searchBooksDao" parameterType="String" resultType="Books">
+		SELECT * FROM t_books a, t_booktype b WHERE a.typeId = b.typeId  AND (bookName LIKE '%' #{_parameter} '%'
+				or b.typeName like '%' #{_parameter} '%' or a.author like '%' #{_parameter} '%' or a.bookId = #{_parameter})
+	</select>
+	
+	<!-- 多条件查询书籍 -->
+	<select id="searchBooks1Dao" parameterType="Param2" resultType="Books">
+		select * from t_books a,t_booktype b where a.typeId=b.typeId
+		<if test='bookId != ""'>
+			and bookId = #{bookId}
+		</if>
+		<if test='bookName != ""'>
+			and bookName = #{bookName}
+		</if>
+		<if test='author != ""'>
+			and author = #{author}
+		</if>
+		<if test='publishers != ""'>
+			and publishers = #{publishers}
+		</if>
+		<if test='typeName != ""'>
+			and typeName = #{typeName}
+		</if>
+	</select>
+	
+	<!-- 每日新书 -->
+	<select id="newBookDao" parameterType="java.util.Date" resultType="Books">
+		select * from t_books where time = #{time}
+	</select>
+	
+	<!-- 热门图书推介 -->
+	<select id="hotBookDao" resultType="Books">
+		select * from t_books order by number
+	</select>
+	
+	<!-- 根据图书类型查询图书信息 -->
+	<select id="searchBooks2Dao" parameterType="String" resultType="Books">
+		SELECT * FROM t_books a, t_booktype b WHERE a.typeId = b.typeId and typeName = #{typeName}
+	</select>
+	
+	<!-- 显示一本图书信息 --> 
+	<select id="findBookDao" parameterType="String" resultType="Books">
+		select * from t_books where bookId = #{bookId}
+	</select>
+	
+	<!-- 查询图书状态 -->
+	<select id="findStatusDao" parameterType="String" resultType="String">
+		select status from t_books where bookId = #{bookId}
+	</select>
+	
+	<!-- 图书操作，改变库存 -->
+	<update id="updateAmountDao" parameterType="Books">
+		update t_books set amount = #{amount},status = #{status} where bookId = #{bookId}
+	</update>
+	
+	<!-- 查询图书借阅次数 -->
+	<select id="findNumberDao" parameterType="String" resultType="int">
+		select number from t_books where bookId = #{bookId}
+	</select>
+	
+	<!-- 通过借阅申请，借阅次数加一 -->
+	<update id="updateNumberDao" parameterType="Books">
+		update t_books set number = #{number} where bookId = #{bookId}
+	</update>
+	
+</mapper>
+

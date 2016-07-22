@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.yuanjunye.www.dao.ICommentDao"> 
+	
+	<!-- 查询一本图书的评论 -->
+	<select id="bookCommentDao" parameterType="String" resultType="Comment">
+		select * from t_comment a, t_user b where a.userName = b.userName and a.bookId = #{bookId} 
+			ORDER BY a.id
+	</select>
+	
+	<!-- 发表评论 -->
+	<insert id="publishDao" parameterType="Comment">
+		insert into t_comment values(null,#{bookId} ,#{userName} ,#{comments} ,#{time} )
+	</insert>
+	
+	<!-- 管理员删除评论 -->
+	<delete id="deleteCommentDao" parameterType="int">
+		delete from t_comment where id = #{id}
+	</delete>
+	
+	<!-- 查询个人评论 -->
+	<select id="myCommentDao" parameterType="String" resultType="Comment">
+		select * from t_comment a, t_user b where a.userName = b.userName and a.userName = #{userName}
+			ORDER BY a.id
+	</select>
+	
+	<!-- 用户删除个人评论 -->
+	<delete id="deleteComment1Dao" parameterType="Comment">
+		delete from t_comment where id = #{id} and userName = #{userName}
+	</delete>
+	
+</mapper>
+

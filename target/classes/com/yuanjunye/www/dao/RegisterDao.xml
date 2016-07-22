@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.yuanjunye.www.dao.IRegisterDao"> 
+	
+	<insert id="addUserDao" parameterType="User">
+		insert into t_user(userName,password,identity,status) values(#{userName},#{password},#{identity},#{status})
+	</insert>
+	
+	<insert id="addStudentDao" parameterType="Student">
+		insert into t_student(studentId,studentName,userName,email,photo) 
+			values(#{studentId},#{studentName},#{userName},#{email},#{photo})
+	</insert>
+	
+	<insert id="addManagerDao" parameterType="Manager">
+		insert into t_manager(managerId,managerName,userName,email,photo)
+		 values(#{managerId},#{managerName},#{userName},#{email},#{photo})
+	</insert>
+	
+	<select id="checkUserNameDao" parameterType="String" resultType="int">
+		select count(*) from t_user where userName = #{_parameter}
+	</select>
+	
+	<select id="checkStudentIdDao" parameterType="long" resultType="int">
+		select count(*) from t_student where studentId = #{_parameter}
+	</select>
+	
+	<select id="checkManagerIdDao" parameterType="int" resultType="int">
+		select count(*) from t_manager where managerId = #{_parameter}
+	</select>
+	
+	<select id="checkStudentEmailDao" parameterType="String" resultType="int">
+		select count(*) from t_student where email = #{_parameter}
+	</select>
+	
+	<select id="checkManagerEmailDao" parameterType="String" resultType="int">
+		select count(*) from t_manager where email = #{_parameter}
+	</select>
+	
+</mapper>
+

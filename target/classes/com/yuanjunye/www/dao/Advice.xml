@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.yuanjunye.www.dao.IAdviceDao"> 
+	
+	<!-- 添加意见反馈 -->
+	<insert id="addAdviceDao" parameterType="Advice">
+		insert into t_advice values(null,#{userName},#{advice},#{time})
+	</insert>
+	
+	<!-- 查询所有意见反馈 -->
+	<select id="ShowAdviceDao" resultType="Advice">
+		select * from t_advice a, t_user b where a.userName = b.userName order by a.id
+	</select>
+	
+	<!-- 删除意见 -->
+	<delete id="deleteAdviceDao" parameterType="int">
+		delete from t_advice where id = #{id}
+	</delete>
+	
+	
+	
+</mapper>
+
