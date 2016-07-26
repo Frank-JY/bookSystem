@@ -3,12 +3,17 @@ package com.yuanjunye.www.service;
 import java.util.List;
 import java.util.Set;
 
-import com.yuanjunye.www.dao.BookTypeDao;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.yuanjunye.www.dao.IBookTypeDao;
 import com.yuanjunye.www.po.BookType;
 
-public class BookTypeService {
-
-	private BookTypeDao bookTypeDao = new BookTypeDao();
+@Service
+public class BookTypeService implements IBookTypeService{
+	@Resource
+	private IBookTypeDao bookTypeDao;
 	
 	/**
 	 * 显示所有图书类型

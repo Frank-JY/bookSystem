@@ -13,7 +13,7 @@
 	</select>
 	
 	<!-- 查询图书类型名称 -->
-	<select id="findTypeNameDao" parameterType="String" resultType="String">
+	<select id="findTypeNameDao" parameterType="int" resultType="String">
 		select typeName from t_booktype where typeId = #{typeId}
 	</select>
 	

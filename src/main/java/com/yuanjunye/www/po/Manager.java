@@ -65,6 +65,7 @@ public class Manager {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+	
 
 
 	public int getAge() {
@@ -87,15 +88,6 @@ public class Manager {
 	}
 
 
-	public long getMobile() {
-		return mobile;
-	}
-
-
-	public void setMobile(long mobile) {
-		this.mobile = mobile;
-	}
-
 
 	public String getEmail() {
 		return email;
@@ -114,6 +106,16 @@ public class Manager {
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+
+
+	public long getMobile() {
+		return mobile;
+	}
+
+
+	public void setMobile(long mobile) {
+		this.mobile = mobile;
 	}
 	
 }

@@ -9,7 +9,18 @@ public class Advice {
 	private String identity;
 	private String advice;
 	private Date time;
+	private String photo;
 	
+	public String getPhoto() {
+		return photo;
+	}
+
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+
 	public Advice() {
 		super();
 	}

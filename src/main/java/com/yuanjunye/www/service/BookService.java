@@ -1,16 +1,25 @@
 package com.yuanjunye.www.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import com.yuanjunye.www.dao.BookDao;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Service;
+
+import com.yuanjunye.www.dao.IBookDao;
 import com.yuanjunye.www.po.Books;
 import com.yuanjunye.www.po.Param2;
 
-public class BookService {
+@Service
+public class BookService implements IBookService{
 	
-	private BookDao bookDao = new BookDao(); 
+	@Resource
+	private IBookDao bookDao; 
 
 	/**
 	 * 上架图书
@@ -183,14 +192,6 @@ public class BookService {
 		return bookDao.findAmountDao(bookId);
 	}
 	
-	/**
-	 * 查询图书借阅次数
-	 * @param bookId
-	 * @return
-	 */
-	public int findNumber(String bookId) {
-		return bookDao.findNumberDao(bookId);
-	}
 	
 	/**
 	 * 申请借阅图书，改变库存
@@ -207,20 +208,6 @@ public class BookService {
 		return bool;
 	}
 	
-	/**
-	 * 通过借阅申请，借阅次数加一
-	 * @param bookId
-	 * @param amount
-	 * @return
-	 */
-	public boolean updateNumberDao(Books book) {
-		boolean bool = true;
-		int t = bookDao.updateNumberDao(book);
-		if(t == 0) {
-			bool = false;
-		}
-		return bool;
-	}
 	
 	/**
 	 * 模糊查询图书信息
@@ -253,8 +240,19 @@ public class BookService {
 	 * @param time
 	 * @return
 	 */
-	public List<Books> newBook(Date time) {
-		return bookDao.newBookDao(time);
+	public List<Books> newBook() {
+		List<Books> newBookList = null;
+		try {
+			SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+			Date currentTime  = new Date();
+			Date time = new Date();
+			String s = df.format(currentTime);
+			time = df.parse(s);
+			newBookList = bookDao.newBookDao(time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return newBookList;
 	}
 	
 	/**
@@ -263,5 +261,26 @@ public class BookService {
 	 */
 	public List<Books> hotBook() {
 		return bookDao.hotBookDao();
+	}
+
+	/**
+	 * 修改图书逻辑
+	 */
+	@Override
+	public Books judge(Books book ,int oldTotal) {
+		int amount = book.getAmount();
+		int total = book.getTotal();
+		amount = (total - oldTotal) + amount;
+		String status = book.getStatus();
+		if(!status.equals("已下架")) {
+			if(amount == 0) {
+				status = "无库存";
+			}else {
+				status = "可借阅";
+			}
+		}
+		book.setAmount(amount);
+		book.setStatus(status);
+		return book;
 	}
 }

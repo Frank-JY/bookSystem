@@ -12,8 +12,18 @@ public class Friend {
 	private String friendUserName;
 	private String identity;
 	private String status;
+	private String photo;
 	
-	
+	public String getPhoto() {
+		return photo;
+	}
+
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+
 	public Friend() {
 		super();
 	}

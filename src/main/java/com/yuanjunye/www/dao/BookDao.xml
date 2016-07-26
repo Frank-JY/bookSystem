@@ -117,7 +117,7 @@
 	
 	<!-- 图书操作，改变库存 -->
 	<update id="updateAmountDao" parameterType="Books">
-		update t_books set amount = #{amount},status = #{status} where bookId = #{bookId}
+		update t_books set amount = amount+1,status = #{status} where bookId = #{bookId}
 	</update>
 	
 	<!-- 查询图书借阅次数 -->
@@ -126,8 +126,8 @@
 	</select>
 	
 	<!-- 通过借阅申请，借阅次数加一 -->
-	<update id="updateNumberDao" parameterType="Books">
-		update t_books set number = #{number} where bookId = #{bookId}
+	<update id="updateNumberDao" parameterType="String">
+		update t_books set number = number+1 where bookId = #{bookId}
 	</update>
 	
 </mapper>

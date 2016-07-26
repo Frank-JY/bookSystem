@@ -117,7 +117,7 @@ public interface IBookDao {
 	 * @param amount
 	 * @return
 	 */
-	public int updateNumberDao(Books book);
+	public int updateNumberDao(String bookId);
 	
 	/**
 	 * 模糊查询图书信息

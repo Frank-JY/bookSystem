@@ -2,12 +2,21 @@ package com.yuanjunye.www.service;
 
 import java.util.List;
 
-import com.yuanjunye.www.dao.FriendDao;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.yuanjunye.www.dao.IFriendDao;
+import com.yuanjunye.www.dao.IUserDao;
 import com.yuanjunye.www.po.Friend;
 
-public class FriendService {
+@Service
+public class FriendService implements IFriendService{
 
-	private FriendDao friendDao = new FriendDao();
+	@Resource
+	private IFriendDao friendDao;
+	@Resource
+	private IUserDao userDao;
 	
 	/**
 	 * 好友申请
@@ -16,6 +25,7 @@ public class FriendService {
 	 */
 	public boolean addFriendDao(Friend friend) {
 		boolean bool = true;
+		friend.setStatus("等待申请");
 		int t = friendDao.addFriendDao(friend);
 		if(t == 0) {
 			bool = false;
@@ -39,7 +49,19 @@ public class FriendService {
 	 * @return
 	 */
 	public List<Friend> showFriend(String myUserName) {
-		return friendDao.showFriendDao(myUserName);
+		List<Friend> friendList = friendDao.showFriendDao(myUserName);
+		for(Friend friend : friendList) {
+			String friendUserName = friend.getFriendUserName();
+			String identity = friend.getIdentity();
+			String headphoto = "";
+				if(identity.equals("学生")) {
+					headphoto = userDao.findStudentPhotoDao(friendUserName);
+				}else {
+					headphoto = userDao.findManagerPhotoDao(friendUserName);
+				}	
+			friend.setPhoto(headphoto);
+		}
+		return friendList;
 	}
 	
 	/**
@@ -48,7 +70,19 @@ public class FriendService {
 	 * @return
 	 */
 	public List<Friend> showApplyFriend(String myUserName) {
-		return friendDao.showApplyFriendDao(myUserName);
+		List<Friend> applyFriendList = friendDao.showApplyFriendDao(myUserName);
+		for(Friend friend : applyFriendList) {
+			String identity = friend.getIdentity();
+			String myUserUserName = friend.getMyUserName();
+			String headphoto = "";
+				if(identity.equals("学生")) {
+					headphoto = userDao.findStudentPhotoDao(myUserUserName);
+				}else {
+					headphoto = userDao.findManagerPhotoDao(myUserUserName);
+				}	
+			friend.setPhoto(headphoto);
+		}
+		return applyFriendList;
 	}
 	
 	/**

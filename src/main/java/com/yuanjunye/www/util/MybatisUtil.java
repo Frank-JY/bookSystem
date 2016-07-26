@@ -11,12 +11,12 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 public class MybatisUtil {
 
 	public static SqlSessionFactory getFactory() throws IOException {
-		String resource = "com/yuanjunye/www/config/conf.xml";
+		String resource = "spring-mybatis.xml";
 		Reader reader = Resources.getResourceAsReader(resource);
 		SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader);
 		return factory;
 	}
-	
+	  
 	public static void close(SqlSession session) {
 		if(session != null) {
 			session.close();

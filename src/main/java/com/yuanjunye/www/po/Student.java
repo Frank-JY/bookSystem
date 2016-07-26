@@ -9,14 +9,14 @@ import java.util.Date;
  */
 public class Student {
 	
-	private long studentId;
+	private Long studentId;
 	private String studentName;
 	private String userName;
 	private String sex;
 	private String studentMajor;
 	private String studentClass;
 	private Date birthday;
-	private long mobile;
+	private Long mobile;
 	private String email;
 	private String photo;
 	

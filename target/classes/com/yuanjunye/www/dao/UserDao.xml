@@ -4,21 +4,19 @@
 	
 	
 	<!-- 显示等待申请的学生 -->
-	<select id="showApplyStudentDao" resultMap="showApplyStudent">
-		select b.studentId,b.studentName,b.email,a.userName,a.status,a.identity from t_user a,t_student b 
-		where a.userName = b.userName and status = '等待申请'
+	<select id="showApplyStudentDao" resultType="User">
+		select 
+			b.studentId "student.studentId",
+			b.studentName "student.studentName",
+			b.email "student.email",
+			a.userName,
+			a.status,
+			a.identity 
+				from t_user a,t_student b 
+					where a.userName = b.userName and status = '等待申请'
 	</select>
 	
-	<resultMap type="User" id="showApplyStudent">
-		<result property="userName" column="userName"/>
-		<result property="status" column="status"/>
-		<result property="identity" column="identity"/>
-		<association property="student" javaType="Student">
-			<result property="studentId" column="studentId"/>
-			<result property="studentName" column="studentName"/>
-			<result property="email" column="email"/>
-		</association>
-	</resultMap>
+	
 	
 	<!-- 显示等待申请的管理员 -->
 	<select id="showApplyManagerDao" resultMap="showApplyManager">
@@ -105,7 +103,7 @@
 	<update id="updateStudentDao" parameterType="Student">
 		update t_student set sex=#{sex}, studentMajor=#{studentMajor}, 
 		studentClass=#{studentClass}, birthday=#{birthday}, mobile=#{mobile} 
-		where userName = ?
+		where userName = #{userName}
 	</update>
 	<!-- 更新管理员信息 -->
 	<update id="updateManagerDao" parameterType="Manager">
@@ -166,7 +164,7 @@
 	</resultMap>
 	
 	<!-- 查询用户身份 -->
-	<select id="findIdentiyDao" parameterType="String" resultType="String">
+	<select id="findIdentityDao" parameterType="String" resultType="String">
 		select identity from t_user where userName = #{userName}
 	</select>
 	

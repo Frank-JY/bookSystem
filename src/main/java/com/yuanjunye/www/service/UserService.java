@@ -1,16 +1,23 @@
 package com.yuanjunye.www.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-import com.yuanjunye.www.dao.UserDao;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.yuanjunye.www.dao.IUserDao;
 import com.yuanjunye.www.po.Manager;
 import com.yuanjunye.www.po.Param1;
 import com.yuanjunye.www.po.Student;
 import com.yuanjunye.www.po.User;
-
-public class UserService {
-	
-	private UserDao userDao = new UserDao();
+@Service
+public class UserService implements IUserService{
+	@Resource
+	private IUserDao userDao;
 	
 	/**
 	 * 显示等待申请的学生
@@ -95,6 +102,18 @@ public class UserService {
 	 */
 	public boolean updateStudent(Student student) {
 		boolean bool = true;
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		Date birthday = new Date();
+		try {
+			String bir = "1970-01-01";
+			birthday = df.parse(bir);
+			if(null != student.getBirthday() ) {
+				birthday = df.parse(df.format(student.getBirthday()));
+			}
+		}catch (ParseException e) {
+			e.printStackTrace();
+		}
+		student.setBirthday(birthday);
 		int t = userDao.updateStudentDao(student);
 		if(t == 0) {
 			bool = false;
@@ -109,6 +128,18 @@ public class UserService {
 	 */
 	public boolean updateManager(Manager manager) {
 		boolean bool = true;
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		Date birthday = new Date();
+		try {
+			String bir = "1970-01-01";
+			birthday = df.parse(bir);
+			if(null != manager.getBirthday() ) {
+				birthday = df.parse(df.format(manager.getBirthday()));
+			}
+		}catch (ParseException e) {
+			e.printStackTrace();
+		}
+		manager.setBirthday(birthday);
 		int t = userDao.updateManagerDao(manager);
 		if(t == 0) {
 			bool = false;
@@ -121,8 +152,14 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
-	public boolean updatePassword(User user) {
+	public boolean updatePassword(User user,String newPassword, String oldPassword) {
 		boolean bool = true;
+		String password = user.getPassword();
+		if(oldPassword.equals(password)) {
+			user.setPassword(newPassword);
+		}else {
+			return false;
+		}
 		int t = userDao.updatePasswordDao(user);
 		if(t == 0) {
 			bool = false;
@@ -135,8 +172,8 @@ public class UserService {
 	 * @param userName
 	 * @return
 	 */
-	public String findIdentiy(String userName) {
-		return userDao.findIdentiyDao(userName);
+	public String findIdentity(String userName) {
+		return userDao.findIdentityDao(userName);
 	}
 	
 	/**

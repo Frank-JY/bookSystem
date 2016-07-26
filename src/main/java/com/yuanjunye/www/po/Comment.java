@@ -11,7 +11,18 @@ public class Comment {
 	private String identity;
 	private String photo;
 	private Date time;
+	private Books book;
 	
+	public Books getBook() {
+		return book;
+	}
+
+
+	public void setBook(Books book) {
+		this.book = book;
+	}
+
+
 	public Comment() {
 		super();
 	}

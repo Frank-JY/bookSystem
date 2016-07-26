@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+    <!-- 自动扫描 -->  
+   <context:component-scan base-package="com.yuanjunye.www" />  
+
+  	 <!-- <context:property-placeholder location="classpath:jdbc.properties" order="1"/> -->
+  
+ <!--  <bean id="propertyConfigurer"  
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+        <property name="location" value="classpath:jdbc.properties" />  
+    </bean> -->
+  
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"  
+        destroy-method="close">  
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />  
+        <property name="url" value="jdbc:mysql://localhost:3306/db_book" />  
+        <property name="username" value="root" />  
+        <property name="password" value="123456" />  
+        <!-- 初始化连接大小 -->  
+        <property name="initialSize" value="0" />  
+        <!-- 连接池最大数量 -->  
+        <property name="maxActive" value="20" />  
+        <!-- 连接池最大空闲 -->  
+        <property name="maxIdle" value="20" />  
+        <!-- 连接池最小空闲 -->  
+        <property name="minIdle" value="1" />  
+        <!-- 获取连接最大等待时间 -->  
+        <property name="maxWait" value="60000" />  
+    </bean>  
+
+    <!-- 
+		2. mybatis的SqlSession的工厂: SqlSessionFactoryBean 
+			dataSource:引用数据源 
+			 typeAliasesPackage：指定实体类的包名，自动将实体的简单类名映射成别名
+	-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mapperLocations" value="classpath:com/yuanjunye/www/dao/*.xml"></property>
+		<property name="typeAliasesPackage" value="com.yuanjunye.www.po"/>
+	</bean>
+ 
+	<!-- 
+		3. mybatis自动扫描加载Sql映射文件/接口 : MapperScannerConfigurer 
+			basePackage：指定Sql映射文件/接口所在的包（自动扫描）
+			sqlSessionFactory：引用上面定义的sqlSessionFactory
+	-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.yuanjunye.www.dao"/>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean> 
+	
+	<!-- 4. 事务管理 : DataSourceTransactionManager
+		dataSource:引用上面定义的数据源
+	 -->
+		
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean> 
+
+	<!-- 5. 使用声明式事务 
+		transaction-manager：引用上面定义的事务管理器
+	-->
+	<tx:annotation-driven transaction-manager="txManager" />
+</beans>  

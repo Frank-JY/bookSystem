@@ -92,7 +92,7 @@ public interface IUserDao {
 	 * @param userName
 	 * @return
 	 */
-	public String findIdentiyDao(String userName);
+	public String findIdentityDao(String userName);
 	
 	/**
 	 * 模糊查询管理员

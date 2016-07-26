@@ -1,13 +1,24 @@
 package com.yuanjunye.www.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.yuanjunye.www.dao.FavouriteDao;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.yuanjunye.www.dao.IBookDao;
+import com.yuanjunye.www.dao.IFavouriteDao;
+import com.yuanjunye.www.po.Books;
 import com.yuanjunye.www.po.Favourite;
 
-public class FavouriteService {
+@Service
+public class FavouriteService implements IFavouriteService{
 
-	private FavouriteDao favouriteDao = new FavouriteDao();
+	@Resource
+	private IFavouriteDao favouriteDao;
+	@Resource
+	private IBookDao bookDao;
 	
 	
 	/**
@@ -58,8 +69,14 @@ public class FavouriteService {
 	 * @param userName
 	 * @return
 	 */
-	public List<String> findCollectBookId(String userName) {
-		return favouriteDao.findCollectBookIdDao(userName);
+	public List<Books> findCollectBookId(String userName) {
+		List<Books> booksList = new ArrayList<Books>();
+		List<String> bookIdList = favouriteDao.findCollectBookIdDao(userName);
+		for(String bookId : bookIdList) {
+			Books book = bookDao.findBookDao(bookId);
+			booksList.add(book);
+		}
+		return booksList;
 	}
 	
 	/**

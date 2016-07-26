@@ -19,12 +19,12 @@
 	
 	<!-- 查询学生指定图书状态 -->
 	<select id="findStatus1Dao" parameterType="StudentBorrow" resultType="String">
-		select status from t_stborrow where bookId = #{bookId} and userName = #{userName}
+		select status from t_stborrow where bookId = #{bookId} and userName = #{userName}  and status !='申请未通过' and status !='已归还'
 	</select>
 	
 	<!-- 查询管理员指定图书借阅状态 -->
 	<select id="findStatus2Dao" parameterType="ManagerBorrow" resultType="String">
-		select status from t_maborrow where bookId = #{bookId} and userName = #{userName}
+		select status from t_maborrow where bookId = #{bookId} and userName = #{userName} and status !='申请未通过' and status !='已归还'
 	</select>
 	
 	<!-- 学生提交借阅申请 -->
