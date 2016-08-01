@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.yuanjunye.www.dao.IBookTypeDao"> 
+	
+	<!-- 查询所有图书类型名称 -->
+	<select id="allTypeNameDao" resultType="String">
+		select typeName from t_booktype
+	</select>
+	
+	<!-- 显示所有的图书类型 -->
+	<select id="showBookTypeDao" resultType="BookType">
+		select * from t_booktype
+	</select>
+	
+	<!-- 查询图书类型名称 -->
+	<select id="findTypeNameDao" parameterType="int" resultType="String">
+		select typeName from t_booktype where typeId = #{typeId}
+	</select>
+	
+	<!-- 修改图书类型 -->
+	<update id="updateBookTypeDao" parameterType="BookType">
+		update t_booktype set typeName = #{typeName} where typeId = #{typeId}
+	</update>
+	
+	<!-- 判断类型名称是否存在 -->
+	<select id="judgeTypeNameDao" parameterType="String" resultType="int">
+		select count(*) from t_booktype where typeName = #{typeName}
+	</select>
+	
+	<!-- 添加图书类型 -->	
+	<insert id="addBookTypeDao" parameterType="String">
+		insert into t_booktype values(null,#{typeName})
+	</insert>
+	
+	<!-- 删除图书类型 -->
+	<delete id="deleteBookTypeDao" parameterType="int">
+		delete from t_booktype where typeId = #{typeId}
+	</delete>
+	
+	
+</mapper>
+

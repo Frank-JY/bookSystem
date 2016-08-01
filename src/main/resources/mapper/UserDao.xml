@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.yuanjunye.www.dao.IUserDao"> 
+	
+	
+	<!-- 显示等待申请的学生 -->
+	<select id="showApplyStudentDao" resultType="User">
+		select 
+			b.studentId "student.studentId",
+			b.studentName "student.studentName",
+			b.email "student.email",
+			a.userName,
+			a.status,
+			a.identity 
+				from t_user a,t_student b 
+					where a.userName = b.userName and status = '等待申请'
+	</select>
+	
+	
+	
+	<!-- 显示等待申请的管理员 -->
+	<select id="showApplyManagerDao" resultMap="showApplyManager">
+		select b.managerId,b.managerName,b.email,a.userName,a.status,a.identity from t_user a,t_manager b 
+		where a.userName = b.userName and status = '等待申请'
+	</select>
+	
+	<resultMap type="User" id="showApplyManager">
+		<result property="userName" column="userName"/>
+		<result property="status" column="status"/>
+		<result property="identity" column="identity"/>
+		<association property="manager" javaType="Manager">
+			<result property="managerId" column="managerId"/>
+			<result property="managerName" column="managerName"/>
+			<result property="email" column="email"/>
+		</association>
+	</resultMap>
+	
+	<!-- 查询学生头像路径 -->
+	<select id="findStudentPhotoDao" parameterType="String" resultType="String">
+		select photo from t_student where userName = #{_parameter}
+	</select>
+	
+	<!-- 查询管理员头像路径 -->
+	<select id="findManagerPhotoDao" parameterType="String" resultType="String">
+		select photo from t_manager where userName = #{_parameter}
+	</select>
+	
+	<!-- 同意用户注册申请 -->
+	<update id="passUserDao" parameterType="String" >
+		update t_user set status = '已通过申请' where userName = #{_parameter}
+	</update>
+	
+	<!-- 不同意用户注册申请 -->
+	<delete id="rejectUserDao" parameterType="String" >
+		delete from t_user where userName = #{_parameter}
+	</delete>
+	<!-- 学生用户个人信息 -->
+	<select id="myStudentDao" parameterType="String" resultMap="myStudent">
+		select * from t_user a,t_student b where a.userName = #{_parameter} and a.userName = b.userName 
+			and status = '已通过申请'
+	</select>
+	
+	<resultMap type="User" id="myStudent">
+		<result property="userName" column="userName"/>
+		<result property="identity" column="identity"/>
+		<association property="student" javaType="Student">
+			<result property="studentId" column="studentId"/>
+			<result property="studentName" column="studentName"/>
+			<result property="sex" column="sex"/>
+			<result property="studentMajor" column="studentMajor"/>
+			<result property="studentClass" column="studentClass"/>
+			<result property="birthday" column="birthday"/>
+			<result property="mobile" column="mobile"/>
+			<result property="email" column="email"/>
+			<result property="photo" column="photo"/>
+		</association>
+	</resultMap>
+	
+	
+	
+	<!--管理员用户个人信息 -->
+	<select id="myManagerDao" parameterType="String" resultMap="myManager">
+		select * from t_user a,t_manager b where a.userName = #{_parameter} and a.userName = b.userName 
+			and status = '已通过申请'
+	</select>
+	
+	<resultMap type="User" id="myManager">
+		<result property="userName" column="userName"/>
+		<result property="identity" column="identity"/>
+		<association property="manager" javaType="Manager">
+			<result property="managerId" column="managerId"/>
+			<result property="managerName" column="managerName"/>
+			<result property="sex" column="sex"/>
+			<result property="age" column="age"/>
+			<result property="birthday" column="birthday"/>
+			<result property="mobile" column="mobile"/>
+			<result property="email" column="email"/>
+			<result property="photo" column="photo"/>
+		</association>
+	</resultMap>
+	
+	<!-- 更新学生信息 -->
+	<update id="updateStudentDao" parameterType="Student">
+		update t_student set sex=#{sex}, studentMajor=#{studentMajor}, 
+		studentClass=#{studentClass}, birthday=#{birthday}, mobile=#{mobile} 
+		where userName = #{userName}
+	</update>
+	<!-- 更新管理员信息 -->
+	<update id="updateManagerDao" parameterType="Manager">
+		update t_manager set sex=#{sex}, age=#{age}, birthday=#{birthday},
+		 mobile=#{mobile} where userName = #{userName}
+	</update>
+	<!-- 更改学生用户头像 -->
+	<update id="updateStudentPhotoDao" parameterType="Student">
+		update t_student set photo = #{photo} where studentId = #{studentId}
+	</update>
+	<!-- 更改管理员用户头像 -->
+	<update id="updateManagerPhotoDao" parameterType="Manager">
+		update t_manager set photo = #{photo} where managerId = #{managerId}
+	</update>
+	<!-- 修改用户密码 -->
+	<update id="updatePasswordDao" parameterType="User">
+		update t_user set password = #{password} where userName = #{userName}
+	</update>
+	<!-- 显示通过申请的学生 -->
+	<select id="showAllStudentDao" resultMap="showAllStudent">
+		select * from t_user a,t_student b where a.userName = b.userName 
+			and status = '已通过申请'
+	</select>
+	
+	<resultMap type="User" id="showAllStudent">
+		<result property="userName" column="userName"/>
+		<result property="identity" column="identity"/>
+		<association property="student" javaType="Student">
+			<result property="studentId" column="studentId"/>
+			<result property="studentName" column="studentName"/>
+			<result property="sex" column="sex"/>
+			<result property="studentMajor" column="studentMajor"/>
+			<result property="studentClass" column="studentClass"/>
+			<result property="birthday" column="birthday"/>
+			<result property="mobile" column="mobile"/>
+			<result property="email" column="email"/>
+		</association>
+	</resultMap>
+	
+	<!-- 显示通过申请的管理员 -->
+	<select id="showAllManagerDao" resultMap="showAllManager">
+		select * from t_user a,t_manager b where a.userName = b.userName 
+			and status = '已通过申请'
+	</select>
+	
+	<resultMap type="User" id="showAllManager">
+		<result property="userName" column="userName"/>
+		<result property="identity" column="identity"/>
+		<association property="manager" javaType="Manager">
+			<result property="managerId" column="managerId"/>
+			<result property="managerName" column="managerName"/>
+			<result property="sex" column="sex"/>
+			<result property="age" column="age"/>
+			<result property="birthday" column="birthday" />
+			<result property="mobile" column="mobile"/>
+			<result property="email" column="email"/>
+		</association>
+	</resultMap>
+	
+	<!-- 查询用户身份 -->
+	<select id="findIdentityDao" parameterType="String" resultType="String">
+		select identity from t_user where userName = #{userName}
+	</select>
+	
+	<!-- 模糊查询管理员 -->
+	<select id="searchManagerDao" parameterType="String" resultMap="searchManager">
+		select * from t_user a,t_manager b where a.userName = b.userName and status = '已通过申请'
+			and (managerName LIKE '%' #{_parameter} '%' OR age LIKE '%' #{_parameter} '%' OR managerId = #{_parameter} 
+				OR sex LIKE '%' #{_parameter} '%' OR a.userName LIKE '%' #{_parameter} '%')
+	</select>
+	<resultMap type="User" id="searchManager">
+		<result property="userName" column="userName"/>
+		<result property="identity" column="identity"/>
+		<association property="manager" javaType="Manager">
+			<result property="managerId" column="managerId"/>
+			<result property="managerName" column="managerName"/>
+			<result property="sex" column="sex"/>
+			<result property="age" column="age"/>
+			<result property="birthday" column="birthday" />
+			<result property="mobile" column="mobile"/>
+			<result property="email" column="email"/>
+		</association>
+	</resultMap>
+	
+	<!-- 模糊查询学生 -->
+	<select id="searchStudentDao" parameterType="String" resultMap="searchStudent">
+		select * from t_user a,t_student b where a.userName = b.userName and status = '已通过申请'
+			and (studentName LIKE '%' #{_parameter} '%' OR studentMajor LIKE '%' #{_parameter} '%' OR studentId = #{_parameter} 
+				OR sex LIKE '%' #{_parameter} '%' OR studentClass LIKE '%' #{_parameter} '%' OR a.userName LIKE '%' #{_parameter} '%')
+	</select>
+	<resultMap type="User" id="searchStudent">
+		<result property="userName" column="userName"/>
+		<result property="identity" column="identity"/>
+		<association property="student" javaType="Student">
+			<result property="studentId" column="studentId"/>
+			<result property="studentName" column="studentName"/>
+			<result property="sex" column="sex"/>
+			<result property="studentMajor" column="studentMajor"/>
+			<result property="studentClass" column="studentClass"/>
+			<result property="birthday" column="birthday"/>
+			<result property="mobile" column="mobile"/>
+			<result property="email" column="email"/>
+		</association>
+	</resultMap>
+	
+	<!-- 多条件查询学生 -->
+	<select id="conditionStudentDao" parameterType="Param1" resultMap="conditionStudent">
+		select * from t_user a,t_student b where a.userName = b.userName and status = '已通过申请'
+			<if test='userName != ""'>
+				and a.userName = #{userName}
+			</if>
+			<if test='studentId != ""'>
+				and studentId = #{studentId}
+			</if>
+			<if test='studentName != ""'>
+				and studentName = #{studentName}
+			</if>
+			<if test='sex != ""'>
+				and sex = #{sex}
+			</if>
+			<if test='studentMajor != ""'>
+				and studentMajor = #{studentMajor}
+			</if>
+			<if test='studentMajor != ""'>
+				and studentClass = #{studentClass}
+			</if>		
+	</select>
+	<resultMap type="User" id="conditionStudent">
+		<result property="userName" column="userName"/>
+		<result property="identity" column="identity"/>
+		<association property="student" javaType="Student">
+			<result property="studentId" column="studentId"/>
+			<result property="studentName" column="studentName"/>
+			<result property="sex" column="sex"/>
+			<result property="studentMajor" column="studentMajor"/>
+			<result property="studentClass" column="studentClass"/>
+			<result property="birthday" column="birthday"/>
+			<result property="mobile" column="mobile"/>
+			<result property="email" column="email"/>
+		</association>
+	</resultMap>
+	
+	<!-- 多条件查询管理员 -->
+	<select id="conditionManagerDao" parameterType="Param1" resultMap="conditionManager">
+		select * from t_user a,t_manager b where a.userName = b.userName and status = '已通过申请'
+			<if test='userName != ""'>
+				and a.userName = #{userName}
+			</if>
+			<if test='managerId != ""'>
+				and managerId = #{managerId}
+			</if>
+			<if test='managerName != ""'>
+				and managerName = #{managerName}
+			</if>
+			<if test='sex != ""'>
+				and sex = #{sex}
+			</if>
+			<if test='age != ""'>
+				and age = #{age}
+			</if>		
+	</select>
+	<resultMap type="User" id="conditionManager">
+		<result property="userName" column="userName"/>
+		<result property="identity" column="identity"/>
+		<association property="manager" javaType="Manager">
+			<result property="managerId" column="managerId"/>
+			<result property="managerName" column="managerName"/>
+			<result property="sex" column="sex"/>
+			<result property="age" column="age"/>
+			<result property="birthday" column="birthday" />
+			<result property="mobile" column="mobile"/>
+			<result property="email" column="email"/>
+		</association>
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
+

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.yuanjunye.www.dao.IBorrowDao"> 
+	
+	<!-- 查询图书名 -->
+	<select id="findBookNameDao" parameterType="String" resultType="String">
+		select bookName from t_books where bookId = #{bookId}
+	</select>
+	
+	<!-- 查询学生用户的姓名学号 -->
+	<select id="findStudentDao" parameterType="String" resultType="Student">
+		select studentName,studentId from t_student where userName = #{userName}
+	</select>
+	
+	<!-- 查询管理员用户的姓名学号 -->
+	<select id="findManagerDao" parameterType="String" resultType="Manager">
+		select managerName,managerId from t_manager where userName = #{userName}
+	</select>
+	
+	<!-- 查询学生指定图书状态 -->
+	<select id="findStatus1Dao" parameterType="StudentBorrow" resultType="String">
+		select status from t_stborrow where bookId = #{bookId} and userName = #{userName}  and status !='申请未通过' and status !='已归还'
+	</select>
+	
+	<!-- 查询管理员指定图书借阅状态 -->
+	<select id="findStatus2Dao" parameterType="ManagerBorrow" resultType="String">
+		select status from t_maborrow where bookId = #{bookId} and userName = #{userName} and status !='申请未通过' and status !='已归还'
+	</select>
+	
+	<!-- 学生提交借阅申请 -->
+	<insert id="addStudentBorrowDao" parameterType="StudentBorrow">
+		insert into t_stborrow values(null,#{readerId},#{userName},#{bookId},#{day},#{applyTime}
+		,null,null,null,null,'等待申请')
+	</insert>
+	
+	<!-- 管理员提交借阅申请 -->
+	<insert id="addManagerBorrowDao" parameterType="ManagerBorrow">
+		insert into t_maborrow values(null,#{readerId},#{userName},#{bookId},#{day}
+		,#{applyTime},null,null,null,null,'等待申请')
+	</insert>
+	
+	<!-- 查询学生借阅申请 -->
+	<select id="applyStudentBorrowDao" resultMap="applyStudentBorrow">
+		select * from t_stborrow a, t_books b,t_student c
+			where a.bookId=b.bookId and a.readerId = c.studentId and a.status = '等待申请' 
+				order by applyTime
+	</select>
+	<resultMap type="StudentBorrow" id="applyStudentBorrow">
+		<id property="id" column="id"/>
+		<result property="readerId" column="readerId"/>
+		<result property="userName" column="userName"/>
+		<result property="bookId" column="bookId"/>
+		<result property="day" column="day"/>
+		<result property="applyTime" column="applyTime"/>
+		<result property="outTime" column="outTime"/>
+		<result property="endTime" column="endTime"/>
+		<result property="inTime" column="inTime"/>
+		<result property="isdue" column="isdue"/>
+		<result property="status" column="status"/>
+		<result property="bookName" column="bookName"/>
+		<result property="readerName" column="studentName"/>
+	</resultMap>
+	
+	<!-- 查询管理员借阅申请 -->
+	<select id="applyManagerBorrowDao" resultMap="applyManage">
+	select * from t_maborrow a, t_books b,t_Manager c
+			where a.bookId=b.bookId and a.readerId = c.managerId and a.status = '等待申请' 
+				order by applyTime
+	</select>
+	<resultMap type="ManagerBorrow" id="applyManage">
+		<id property="id" column="id"/>
+		<result property="readerId" column="readerId"/>
+		<result property="userName" column="userName"/>
+		<result property="bookId" column="bookId"/>
+		<result property="day" column="day"/>
+		<result property="applyTime" column="applyTime"/>
+		<result property="outTime" column="outTime"/>
+		<result property="endTime" column="endTime"/>
+		<result property="inTime" column="inTime"/>
+		<result property="isdue" column="isdue"/>
+		<result property="status" column="status"/>
+		<result property="bookName" column="bookName"/>
+		<result property="readerName" column="managerName"/>
+	</resultMap>
+	
+	<!-- 查询学生借阅天数 -->
+	<select id="findDay1Dao" parameterType="int" resultType="int">
+		select day from t_stborrow where  id = #{id}
+	</select>
+	
+	<!--查询管理员借阅天数  -->
+	<select id="findDay2Dao" parameterType="int" resultType="int">
+		select day from t_maborrow where  id = #{id}
+	</select>
+	
+	<!--查询学生借阅信息的图书编号  -->
+	<select id="findBookId1Dao" parameterType="int" resultType="String">
+		select bookId from t_stborrow where id = #{id}
+	</select>
+	
+	<!--查询管理员借阅信息的图书编号  -->
+	<select id="findBookId2Dao" parameterType="int" resultType="String">
+		select bookId from t_maborrow where id = #{id}
+	</select>
+	
+	<!-- 学生借阅申请成功 -->
+	<update id="passStudentBorrowDao" parameterType="StudentBorrow">
+		update t_stborrow set endTime=#{endTime}, outTime=#{outTime}, isdue=false, status='借阅中' where id=#{id}
+	</update>
+	
+	<!-- 管理员借阅申请成功 -->
+	<update id="passManagerBorrowDao" parameterType="ManagerBorrow">
+		update t_maborrow set endTime=#{endTime}, outTime=#{outTime}, isdue=false, status='借阅中' where id=#{id}
+	</update>
+	
+	<!-- 学生借阅申请失败 -->
+	<update id="rejectStudentBorrowDao" parameterType="int">
+		update t_stborrow set isdue=false, status='申请未通过' where id= #{id}
+	</update>
+	
+	<!-- 管理员借阅申请失败 -->
+	<update id="rejectManagerBorrowDao" parameterType="int">
+		update t_maborrow set isdue=false, status='申请未通过' where id= #{id}
+	</update>
+	
+	<!-- 查询学生个人借阅信息 -->
+	<select id="myStudentBorrowDao" parameterType="String" resultMap="myStudentBorrow">
+		select * from t_stborrow a, t_books b where a.bookId=b.bookId and userName = #{userName} order by id
+	</select>
+	<resultMap type="StudentBorrow" id="myStudentBorrow">
+		<result property="due" column="isdue"/>
+	</resultMap>
+	
+	<!-- 查询管理员个人借阅信息 -->
+	<select id="myManagerBorrowDao" parameterType="String" resultMap="myManagerBorrow">
+		select * from t_maborrow a, t_books b where a.bookId=b.bookId and userName = #{userName} order by id
+	</select>
+	<resultMap type="ManagerBorrow" id="myManagerBorrow">
+		<result property="due" column="isdue"/>
+	</resultMap>
+	
+	<!-- 查询学生借阅信息的归还时间 -->
+	<select id="findEndTime1Dao" parameterType="int" resultType="java.util.Date">
+		select endTime from t_stborrow where id = #{id}
+	</select>
+	
+	<!-- 查询管理员借阅信息的归还时间 -->
+	<select id="findEndTime2Dao" parameterType="int" resultType="java.util.Date">
+		select endTime from t_maborrow where id = #{id}
+	</select>
+	
+	<!-- 学生归还时间 -->
+	<update id="back1Dao" parameterType="StudentBorrow">
+		update t_stborrow set inTime = #{inTime}, isdue = #{due}, status = '已归还' 
+			where id = #{id}
+	</update>
+	
+	<!-- 管理员归还图书时间 -->
+	<update id="back2Dao" parameterType="ManagerBorrow">
+		update t_maborrow set inTime = #{inTime}, isdue = #{due}, status = '已归还' 
+			where id = #{id}
+	</update>
+</mapper>
+

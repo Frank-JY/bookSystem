@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.yuanjunye.www.dao.IFavouriteDao"> 
+	
+	<!-- 获取用户收藏夹图书信息 -->
+	<select id="findCollectBookIdDao" parameterType="String" resultType="String">
+		select bookId from t_favourite where userName = #{userName}
+	</select>
+	
+	<!-- 检查用户是否重复收藏图书 -->
+	<select id="isRepeatDao" parameterType="Favourite" resultType="int">
+		select count(*) from t_favourite where userName = #{userName} and bookId = #{bookId}
+	</select>
+	
+	<!-- 检查用户是否可以收藏(数量少于等于10本) -->
+	<select id="isCollectDao" parameterType="String" resultType="int">
+		select count(*) from t_favourite where userName = #{userName}
+	</select>
+	
+	<!-- 插入用户收藏图书信息 -->
+	<insert id="collectDao" parameterType="Favourite">
+		insert into t_favourite values(null,#{userName},#{bookId})
+	</insert>
+	
+	<!-- 删除收藏夹图书信息 -->
+	<delete id="deleteFavouriteDao" parameterType="Favourite">
+		delete from t_favourite where userName = #{userName} and bookId = #{bookId}
+	</delete>
+	
+</mapper>
+

@@ -1,0 +1,73 @@
+.comment {
+    width: 980px;
+    height:350px;
+    margin:0px auto;
+    padding:0px;
+    background: #F5F7FA;
+    border-right: 1px solid #e5e5e5;
+    position: relative;
+  	border: 5px solid #c0c0c0;
+}
+
+.comment h1{
+	font-size: 22px;
+}
+
+.te {
+	position: relative;
+	left: 30px;
+}
+
+.bu {
+	position: relative;
+	left: 30px;
+}
+
+.reg {
+	width:250px;
+	position: relative;
+	left: 700px;
+	top: -200px;
+	color: #2fca09;
+}
+
+.time {
+	width:200px;
+	position: relative;
+	left: 750px;
+	top:20px;
+	color: black;
+}
+
+.del {
+	width:50px;
+	position: relative;
+	left: 900px;
+	top:-320px;
+}
+
+.commentphoto {
+	width:100px;
+	position: relative;
+	left: 800px;
+	top:-250px;
+}
+
+.commentphoto a:hover img{
+  -webkit-transform:scale(1.5,1.5);
+    -moz-transform:scale(1.5,1.5);
+    -transform:scale(1.5,1.5);
+} 
+
+.bookcommentphoto{
+	width:60px;
+	position: relative;
+	left: 300px;
+	top:-480px;
+}
+
+.bookcommentphoto a:hover img{
+  -webkit-transform:scale(1.5,1.5);
+    -moz-transform:scale(1.5,1.5);
+    -transform:scale(1.5,1.5);
+} 

@@ -1,0 +1,36 @@
+body{
+	 margin: 0; 
+	padding: 0px; 
+}
+	
+.l-head{
+	clear:both;
+	margin:0px;
+	padding:0px;
+	width: 100%;
+	height: 400px;
+	background-image:url("../image/upload/image/loginback.jpeg");
+	position: relative;	
+	top: -35px;	
+}
+
+
+
+.logo0 {
+	margin: 0 auto;
+	height: 180px;
+	width: 70%;
+	position:relative;
+	top :-20px;
+	background:url("../image/upload/image/uni.jpg")no-repeat center center;
+}
+
+hr{
+	width: 1000px;
+	color: #e4ef5c;
+	size: 10px;
+}
+
+h1{
+	color: #f9891a;
+}
